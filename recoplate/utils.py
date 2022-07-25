@@ -4,7 +4,6 @@ from pathlib import Path
 
 import numpy as np
 import tensorflow as tf
-from object_detection.utils import label_map_util
 
 from config.config import TRANSFORM_LASTCHAR
 
@@ -12,13 +11,12 @@ def load_tf_model(model_path:Path) -> Tuple:
     labelmap_file = Path(model_path, "label_map.pbtxt")
     save_model_dir = Path(model_path, "saved_model")
 
-    category_index = label_map_util.create_categories_from_labelmap(labelmap_file)
     detect_fn = tf.saved_model.load(str(save_model_dir))
 
-    return (category_index, detect_fn)
+    return detect_fn
 
 
-def ocr2motorplate(raw_plate):
+def ocr_to_motorplate(raw_plate):
   plate = re.sub('[^a-zA-Z0-9]', '', raw_plate).upper()
 
   # check hard rules
