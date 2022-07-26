@@ -1,7 +1,7 @@
 import cv2
 import click
-
-from models import PlateRecognition
+import matplotlib.pyplot as plt
+from recoplate.models import PlateRecognition
 from config.config import MODEL_CONFIGURATION
 
 @click.group()
@@ -9,8 +9,8 @@ def cli():
     pass
 
 @cli.command()  
-@click.argument("device", default=0)
 @click.argument("model_configuration", default="motorcycle")
+@click.argument("device", default=0)
 def webcam(device, model_configuration):
 
     model_configuration = MODEL_CONFIGURATION[model_configuration]
@@ -25,6 +25,7 @@ def webcam(device, model_configuration):
         print(f"Cannot open {device=}")
         exit()
     
+    print("Starting to read license plates")
     while True:
 
         ret, frame = cap.read()
@@ -36,19 +37,22 @@ def webcam(device, model_configuration):
         cropped_plate, all_plate_text = model.predict(frame)
 
         for plate_detected, text in zip(cropped_plate, all_plate_text):
-            cv2.putText(
-                plate_detected,
-                text,
-                (100,100),
-                fontFace=0,
-                fontScale=1,
-                color=(0,255,0),
-                thickness=2,
-                lineType=cv2.LINE_AA
-                )
-            cv2.imshow("frame", plate_detected)
-            if cv2.waitKey(1) == ord("q"):
-                break
+            print(text)
+
+            # cv2.putText(
+            #     plate_detected,
+            #     text,
+            #     (100,100),
+            #     fontFace=0,
+            #     fontScale=1,
+            #     color=(0,255,0),
+            #     thickness=2,
+            #     lineType=cv2.LINE_AA
+            #     )
+            # plt.imshow(plate_detected)
+            # plt.show()
+            # if cv2.waitKey(1) == ord("q"):
+            #     break
 
     cap.release()
     cv2.destroyAllWindows()

@@ -3,7 +3,7 @@ from typing import Tuple
 import numpy as np
 from paddleocr import PaddleOCR
 
-from utils import ocr_to_motorplate
+from recoplate.utils import ocr_to_motorplate
 
 ALLOW_OCR_METHODS = ["paddle"]
 
@@ -31,8 +31,12 @@ class OCRModel:
     def _predict(self, frame: np.ndarray) -> Tuple:
 
         #TODO: val how many text recognition
-        plate_text, score = self.ocr_model.ocr(frame, cls=False, det=True)[0][1]
-
+        predictions = self.ocr_model.ocr(frame, cls=False, det=True)
+        if len(predictions)==0:
+            plate_text, score = "", 0
+            return plate_text, score 
+            
+        plate_text, score = predictions[0][1]
         plate_text = self.preprocess(plate_text, score)
 
         return plate_text, score
@@ -45,7 +49,8 @@ class OCRModel:
 
 
 class OCRMotorModel(OCRModel):
-    super().__init__()
+    def __init__(self, method_name):
+        super().__init__(method_name)
 
     def preprocess(self, plate_text, score):
         if plate_text == "":

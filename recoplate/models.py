@@ -1,8 +1,8 @@
 import numpy as np
 from typing import Dict, List, Tuple
 
-from detection import PlateDetection
-from recognition import OCRMotorModel
+from recoplate.detection import PlateDetection
+from recoplate.recognition import OCRMotorModel
 
 class PlateRecognition:
     def __init__(self, detector_name, ocr_method) -> None:

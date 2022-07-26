@@ -24,7 +24,7 @@ class PlateDetection:
         self.load_model()
 
     def load_model(self):
-        self.labels, self.detector_model = load_tf_model(self.model_dir)
+        self.detector_model = load_tf_model(self.model_dir)
 
 
     def preprocess(self, frame: np.ndarray) -> tf.Tensor:
