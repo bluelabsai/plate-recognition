@@ -10,13 +10,14 @@ model = PlateRecognition(
     model_configuration["ocr_method"]
     )
 
-device = 0
+device = 2
 cap = cv2.VideoCapture(device)
 
 if not cap.isOpened():
     print(f"Cannot open {device}")
     exit()
 
+print("Starting to read license plate")
 while True:
 
     ret, frame = cap.read()
@@ -27,13 +28,12 @@ while True:
 
     cropped_plate, all_plate_text = model.predict(frame)
 
-    print(all_plate_text)
-
     for plate_detected, text in zip(cropped_plate, all_plate_text):
+        print(text)
         cv2.putText(
             plate_detected,
             text,
-            (100,100),
+            (30,30),
             fontFace=0,
             fontScale=1,
             color=(0,255,0),

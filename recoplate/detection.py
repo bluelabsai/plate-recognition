@@ -7,7 +7,7 @@ import tensorflow as tf
 from config.config import MODELS_DIR
 from recoplate.utils import load_tf_model
 
-ALLOW_DETECTOR_MODELS = ["mobilenet"]
+ALLOW_DETECTOR_MODELS = ["mobilenet_v1", "mobilenet_v2"]
 
 
 class PlateDetection:

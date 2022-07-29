@@ -1,8 +1,11 @@
+from time import sleep
+
 import cv2
 import click
-import matplotlib.pyplot as plt
-from recoplate.models import PlateRecognition
+
 from config.config import MODEL_CONFIGURATION
+from recoplate.models import PlateRecognition
+
 
 @click.group()
 def cli():
@@ -38,7 +41,7 @@ def webcam(device, model_configuration):
 
         for plate_detected, text in zip(cropped_plate, all_plate_text):
             print(text)
-
+            #sleep(1)
             # cv2.putText(
             #     plate_detected,
             #     text,

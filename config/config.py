@@ -14,7 +14,7 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 MODEL_CONFIGURATION ={
     "motorcycle":{
-        "detector_name": "mobilenet",
+        "detector_name": "mobilenet_v2",
         "ocr_method": "paddle"
     }
 }
