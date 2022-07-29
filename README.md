@@ -9,12 +9,10 @@ python >= 3.7
 <pre>
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install --upgrade pip setuptools wheel
 </pre> 
 
-## Virtual enviroment
+## Install dependencies
 <pre>
-python3 -m venv .venv
-source .venv/bin/activate
 python3 -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
 </pre> 

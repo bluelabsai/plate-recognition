@@ -16,6 +16,10 @@ MODEL_CONFIGURATION ={
     "motorcycle":{
         "detector_name": "mobilenet_v2",
         "ocr_method": "paddle"
+    },
+    "car":{
+        "detector_name": "mobilenet_v2",
+        "ocr_method": "paddle"
     }
 }
 
