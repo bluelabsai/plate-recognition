@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 from config.config import MODELS_DIR
-from recoplate.utils import load_tf_model
+from recoplate.utils import load_tf_model, download_models
 
 ALLOW_DETECTOR_MODELS = ["mobilenet_v1", "mobilenet_v2"]
 
@@ -13,6 +13,7 @@ ALLOW_DETECTOR_MODELS = ["mobilenet_v1", "mobilenet_v2"]
 class PlateDetection:
 
     def __init__(self, model_name: str):
+        self.model_name = model_name
 
         if model_name not in ALLOW_DETECTOR_MODELS:
             raise ValueError(
@@ -24,6 +25,10 @@ class PlateDetection:
         self.load_model()
 
     def load_model(self):
+        if not self.model_dir.exists():
+            print("model not exist in project directory, trying download")
+            download_models(self.model_name)
+            
         self.detector_model = load_tf_model(self.model_dir)
 
 

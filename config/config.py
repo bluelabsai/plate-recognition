@@ -10,6 +10,7 @@ MODELS_DIR = Path(STORE_DIR, "models")
 
 # Create dirs
 DATA_DIR.mkdir(parents=True, exist_ok=True)
+MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 MODEL_CONFIGURATION ={
@@ -23,6 +24,10 @@ MODEL_CONFIGURATION ={
     }
 }
 
+URL_MODELS = {
+    "mobilenet_v1": "1nw_uPnm14hzFVjp1E34oK1ObyzBdvk9x",
+    "mobilenet_v2": "1a7U05ttb693hx7CR82Sn__P-t_NIUX2B"
+}
 # hard rule
 TRANSFORM_CHAR = {
     "motorcycle":{

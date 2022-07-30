@@ -1,11 +1,13 @@
 import re
+import zipfile
 from typing import Tuple
 from pathlib import Path
 
+import gdown
 import numpy as np
 import tensorflow as tf
 
-from config.config import TRANSFORM_CHAR
+from config.config import TRANSFORM_CHAR, URL_MODELS, MODELS_DIR
 
 def load_tf_model(model_path:Path) -> Tuple:
     labelmap_file = Path(model_path, "label_map.pbtxt")
@@ -51,3 +53,16 @@ def filter_text(region, ocr_result, region_threshold):
         if length*height / rectangle_size > region_threshold:
             plate.append(result[1])
     return plate
+
+
+def download_models(model_name: str):
+  print("download fold from Google Drive ...")
+  file_id = URL_MODELS[model_name]
+  destination = Path(MODELS_DIR, model_name)
+
+  gdown.download_folder(
+    id=file_id,
+     output=str(destination),
+     use_cookies=False
+)
+
