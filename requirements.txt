@@ -40,11 +40,6 @@ diskcache==5.4.0
 distro==1.7.0
 dpath==2.0.6
 dulwich==0.20.45
-dvc==2.15.0
-dvc-data==0.1.5
-dvc-objects==0.1.5
-dvc-render==0.0.6
-dvc-task==0.1.0
 dvclive==0.10.0
 et-xmlfile==1.1.0
 filelock==3.7.1
