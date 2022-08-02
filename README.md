@@ -21,6 +21,7 @@ source .venv/bin/activate
 <pre>
 python3 -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
+export PYTHONPATH="${PYTHONPATH}:${PWD}"
 </pre> 
 
 ## Run demo
