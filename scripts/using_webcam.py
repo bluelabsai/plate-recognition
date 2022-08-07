@@ -2,6 +2,7 @@ import cv2
 import matplotlib.pyplot as plt
 from recoplate.models import PlateRecognition
 from config.config import MODEL_CONFIGURATION
+from recoplate.utils import draw_first_plate
 
 model_configuration = "motorcycle"
 model_configuration = MODEL_CONFIGURATION[model_configuration]
@@ -10,7 +11,7 @@ model = PlateRecognition(
     model_configuration["ocr_method"]
     )
 
-device = 2
+device = 0
 cap = cv2.VideoCapture(device)
 
 if not cap.isOpened():
@@ -28,25 +29,12 @@ while True:
 
     cropped_plate, all_plate_text = model.predict(frame)
 
-    for plate_detected, text in zip(cropped_plate, all_plate_text):
-        print(text)
-        cv2.putText(
-            plate_detected,
-            text,
-            (30,30),
-            fontFace=0,
-            fontScale=1,
-            color=(0,255,0),
-            thickness=2,
-            lineType=cv2.LINE_AA
-            )
+    # if cropped_plate:
+    #     frame = draw_first_plate(frame, cropped_plate, all_plate_text)
 
-        plt.imshow(plate_detected)
-        plt.show()
-        # cv2.imshow("plate-detected", plate_detected)
+    cv2.imshow("plate-detected", frame)
 
-        # if cv2.waitKey(1) == ord("q"):
-        #     break
-
+    if cv2.waitKey(1) == ord("q"):
+        break
 cap.release()
 cv2.destroyAllWindows()

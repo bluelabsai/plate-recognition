@@ -3,6 +3,7 @@ import zipfile
 from typing import Tuple
 from pathlib import Path
 
+import cv2
 import gdown
 import numpy as np
 import tensorflow as tf
@@ -66,3 +67,23 @@ def download_models(model_name: str):
      use_cookies=False
 )
 
+def resize_img(img, width, height):
+    return cv2.resize(img, (width, height), interpolation = cv2.INTER_AREA)
+
+def draw_first_plate(img, cropped_plate, all_plate_text, ):
+    x = int(img.shape[0] * 0.6)
+    y = int(img.shape[1] * 0.1)
+
+    # size for show plate
+    width = int(img.shape[0] * 0.35)
+    height = int(img.shape[1] * 0.15)
+
+    plate = cropped_plate[0]
+    plate_text = all_plate_text[0]
+
+    plate = resize_img(plate, width, height)
+    cv2.putText(img, plate_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
+        1.5, (255, 10, 58), 3)
+    img[y+10:y+10+height, x:x+width] = plate
+
+    return img
