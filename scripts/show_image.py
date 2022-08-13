@@ -21,6 +21,7 @@ width = int(img.shape[0] * 0.35)
 height = int(img.shape[1] * 0.15)
 
 for plate, plate_text in zip(cropped_plate, all_plate_text):
+    
     plate = resize_img(plate, width, height)
     cv2.putText(img, plate_text, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
         1.5, (255, 10, 58), 3)
@@ -30,4 +31,4 @@ for plate, plate_text in zip(cropped_plate, all_plate_text):
     cv2.imshow("plate-detected", img)
     cv2.waitKey(0) 
     #closing all open windows 
-    cv2.destroyAllWindows() 
+    cv2.destroyAllWindows()

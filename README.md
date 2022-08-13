@@ -26,7 +26,7 @@ export PYTHONPATH="${PYTHONPATH}:${PWD}"
 
 ## Run demo
 <pre>
-python3 recoplate/main.py webcam "motorcycle" 0 
+python3 recoplate/main.py interactive "motorcycle" 0 
 </pre> 
 
 **Commands: webcam**

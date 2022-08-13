@@ -2,6 +2,7 @@ from time import sleep
 
 import cv2
 import click
+import pyperclip
 
 from config.config import MODEL_CONFIGURATION
 from recoplate.models import PlateRecognition
@@ -78,11 +79,14 @@ def interactive(device, model_configuration):
 
         if cropped_plate:
             frame = draw_first_plate(frame, cropped_plate, all_plate_text)
+            if all_plate_text[0]:
+                pyperclip.copy(all_plate_text[0])
 
         cv2.imshow("plate-detected", frame)
-
-        if cv2.waitKey(1) == ord("q"): 
+        
+        if cv2.waitKey(1) == ord("q"):
             break
+        
     cap.release()
     cv2.destroyAllWindows()
 
