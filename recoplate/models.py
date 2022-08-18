@@ -1,19 +1,31 @@
 import numpy as np
 from typing import Dict, List, Tuple
 
-from recoplate.detection import PlateDetection
+from recoplate.detection import PlateDetection, YoloPlateDetection
 from recoplate.recognition import OCRMotorModel
+
+ALLOW_YOLO_DETECTOR_MODELS = ["onnx", "pt"]
 
 class PlateRecognition:
     def __init__(self, detector_name, ocr_method) -> None:
-        self.detection = PlateDetection(detector_name)
+        
+        self.detector_name = detector_name
+        self.ocr_method = ocr_method
+
+        if detector_name in ALLOW_YOLO_DETECTOR_MODELS:
+            self.detection = YoloPlateDetection(detector_name)
+        else:
+            self.detection = PlateDetection(detector_name)
         self.recognition = OCRMotorModel(ocr_method)
         
     def _predict(self, frame: np.ndarray) -> Dict:
 
         predict_data = {}
 
-        cropped_plate, detections = self.detection.predict(frame, self.object_detection_trh)
+        if self.detector_name in ALLOW_YOLO_DETECTOR_MODELS:
+            cropped_plate, detections = self.detection.predict(frame)
+        else:
+            cropped_plate, detections = self.detection.predict(frame, self.object_detection_trh)
 
         all_plate_text = []
         scores = []

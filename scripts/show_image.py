@@ -6,7 +6,7 @@ from config.config import DATA_DIR
 from recoplate.models import PlateRecognition
 from recoplate.utils import resize_img
 
-img_path = DATA_DIR / "plate_2.png"
+img_path = DATA_DIR / "plate_4.png"
 img = cv2.imread(str(img_path))
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 model = PlateRecognition("mobilenet_v2", "paddle")
@@ -29,6 +29,7 @@ for plate, plate_text in zip(cropped_plate, all_plate_text):
     # plt.imshow(img)
     # plt.show()
     cv2.imshow("plate-detected", img)
+    cv2.imwrite("output_plate.png", img)
     cv2.waitKey(0) 
     #closing all open windows 
     cv2.destroyAllWindows()

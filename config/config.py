@@ -15,7 +15,7 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 MODEL_CONFIGURATION ={
     "motorcycle":{
-        "detector_name": "mobilenet_v2",
+        "detector_name": "onnx", #"mobilenet_v2",
         "ocr_method": "paddle"
     },
     "car":{
@@ -26,8 +26,11 @@ MODEL_CONFIGURATION ={
 
 URL_MODELS = {
     "mobilenet_v1": "1nw_uPnm14hzFVjp1E34oK1ObyzBdvk9x",
-    "mobilenet_v2": "1a7U05ttb693hx7CR82Sn__P-t_NIUX2B"
+    "mobilenet_v2": "1a7U05ttb693hx7CR82Sn__P-t_NIUX2B",
+    "onnx":"1lunDZ1nlc5On3AUst_LGFVaNpJhg24Rt",
+    "pt":"1CS5pJ-lqJgY1-czcU0atflhzNizZ9qCL"
 }
+
 # hard rule
 TRANSFORM_CHAR = {
     "motorcycle":{
