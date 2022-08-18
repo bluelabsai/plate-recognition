@@ -3,6 +3,7 @@ from typing import Dict, List, Tuple
 
 from recoplate.detection import PlateDetection, YoloPlateDetection
 from recoplate.recognition import OCRMotorModel
+from recoplate.utils import crop_center
 
 ALLOW_YOLO_DETECTOR_MODELS = ["onnx", "pt"]
 
@@ -51,4 +52,35 @@ class PlateRecognition:
         return [cropped_plate, all_plate_text]
 
 
+class PlateRecognitionLite:
 
+    def __init__(self, ocr_method) -> None:
+        self.ocr_method = ocr_method
+
+        self.recognition = OCRMotorModel(ocr_method)
+
+    def _predict(self, frame):
+        cropped_plate = [crop_center(frame, self.object_detection_range)]
+
+        predict_data = {}
+        all_plate_text = []
+        scores = []
+        for crop_plate in cropped_plate:
+            plate_text, score = self.recognition.predict(crop_plate, self.ocr_threshold)
+            all_plate_text.append(plate_text)
+            scores.append(score)
+
+        predict_data["detection"] = (cropped_plate)
+        predict_data["recognition"] = (all_plate_text, scores)
+
+        return (cropped_plate, all_plate_text, predict_data)
+
+
+
+    def predict(self, frame, object_detection_range:List=[200, 300] ,ocr_threshold: float=0.5):
+        self.object_detection_range = object_detection_range
+        self.ocr_threshold = ocr_threshold
+
+        cropped_plate, all_plate_text, _ = self._predict(frame)
+        
+        return [cropped_plate, all_plate_text]

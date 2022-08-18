@@ -1,6 +1,7 @@
+from optparse import Option
 import re
 import zipfile
-from typing import Tuple
+from typing import List, Tuple
 from pathlib import Path
 
 import cv2
@@ -70,13 +71,22 @@ def download_models(model_name: str):
 def resize_img(img, width, height):
     return cv2.resize(img, (width, height), interpolation = cv2.INTER_AREA)
 
-def draw_first_plate(img, cropped_plate, all_plate_text, ):
-    x = int(img.shape[0] * 0.6)
-    y = int(img.shape[1] * 0.1)
+def draw_first_plate(img, cropped_plate, all_plate_text, size:List=None):
 
-    # size for show plate
-    width = int(img.shape[0] * 0.35)
-    height = int(img.shape[1] * 0.15)
+    if size:
+      width = int(size[0] * 0.6)
+      height = int(size[1] * 0.6)
+
+      x = int(img.shape[0] * 0.8)
+      y = int(img.shape[1] * 0.1)
+
+    else:
+      # size for show plate
+      width = int(img.shape[0] * 0.35)
+      height = int(img.shape[1] * 0.15)
+
+      x = int(img.shape[0] * 0.6)
+      y = int(img.shape[1] * 0.1)
 
     plate = cropped_plate[0]
     plate_text = all_plate_text[0]
@@ -87,3 +97,16 @@ def draw_first_plate(img, cropped_plate, all_plate_text, ):
     img[y+10:y+10+height, x:x+width] = plate
 
     return img
+
+
+def crop_center(img, dim):
+
+    width, height = img.shape[1], img.shape[0]  #process crop width and height for max available dimension
+    crop_width = dim[0] if dim[0]<img.shape[1] else img.shape[1]
+    crop_height = dim[1] if dim[1]<img.shape[0] else img.shape[0] 
+
+    mid_x, mid_y = int(width/2), int(height/2)
+    cw2, ch2 = int(crop_width/2), int(crop_height/2) 
+    crop_img = img[mid_y-ch2:mid_y+ch2, mid_x-cw2:mid_x+cw2]
+    return crop_img
+    
